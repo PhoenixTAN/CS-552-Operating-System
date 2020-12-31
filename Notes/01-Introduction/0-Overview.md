@@ -18,3 +18,4 @@ Operating Systems: Internals and Design Principles, Eighth Edition
 
 **References**
 1. Computer_Systems_A_Programmers_Perspective(3rd).pdf
+2. github https://hansimov.gitbook.io/csapp/

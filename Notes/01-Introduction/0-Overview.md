@@ -19,3 +19,15 @@ Operating Systems: Internals and Design Principles, Eighth Edition
 **References**
 1. Computer_Systems_A_Programmers_Perspective(3rd).pdf
 2. github https://hansimov.gitbook.io/csapp/
+
+## Contents
+
+### Section 1 --- Background
+- 第1章 计算机系统概述 
+    1. 操作系统及其启动过程 操作系统及其启动过程
+    2. 计算机基本构成 Basic Elements
+    3. 微处理器的发展 Evolution of the Microprocessor
+    4. 基本指令周期 Basic Instruction Cycle
+    5. 引入中断机制后的指令周期 Instruction Cycle with Interrupts
+
+

@@ -97,6 +97,9 @@ Once the BIOS **transfers control to the start of the MBR that was loaded into m
 
 **简单讲讲处理器跟IO设备是如何通信的。** IO模块（例如磁盘控制器）可以直接与处理器交换数据。某些情况下（例如Direct Memory Access, DMA）允许IO模块直接与内存进行数据交换，从而减轻处理器的负担。
 
+**可以回忆一下计算机组成原理的知识，如图。**
+![computer-organization](./images/computer-organization.png)
+
 介绍一下**一个IO program都会进行什么动作：**
 1. 一连串的指令（如下图label 4）来准备一个IO操作。例如，这个IO操作是以什么模式进行，可能就需要**给IO设备写一些参数**，另外，可能涉及到跟IO设备**交换数据**。
 2. The actual **IO command**. 在不使用中断的情况下，这个命令一旦发出，程序就必须等待IO设备去执行相应操作(or periodically check the status, or poll the IO device).The program might wait by simply repeatedly performing **a test operation to determine if the IO operation is done**.
@@ -105,4 +108,16 @@ Once the BIOS **transfers control to the start of the MBR that was loaded into m
 ![program-flow](./images/program-flow.png)
 
 - 看Figure 1.5 (a), 如果让程序一直等IO设备完成操作，会浪费相当多的时间。
-- 看Figure 1.5 (b), 
+- 看Figure 1.5 (b), 一开始，程序发起系统调用system call in the form of a WRITE call. IO program 开始运行，运行完后，控制权返回用户程序，与此同时，IO设备会忙于从缓冲区读取数据。当IO设备读完数据，准备好从处理器获取更多的数据的时候，就会给处理器发送一个中断请求(interrupt request),这时候处理器就会停下手中的活，然后去进行中断处理，中断处理玩后，又会返回原来的程序。
+- 看Figure 1.5 (c), long IO wait，第一个IO operation没跑完，user program就想要跑第二个IO program了，这个时候user program is hung up. 等到第一个IO operation跑完，那第二个IO program就可以开始跑了。典型的例子就是打印机, the IO operation will take much more time than executing a sequence of user instructions.
+
+![transfer-control](./images/transfer-control.png)
+
+### Instruction Cycle with Interrupts
+这时候，指令周期图就会变成这样。
+
+![instruction-cycle-with-interrupts](./images/instruction-cycle-with-interrupts.png)
+
+
+### Interrupt Processing
+

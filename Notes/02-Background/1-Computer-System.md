@@ -5,6 +5,7 @@
 2. 计算机基本构成 Basic Elements
 3. 基本指令周期 Basic Instruction Cycle
 4. 引入中断机制后的指令周期 Instruction Cycle with Interrupts
+5. 内存分级机制 Memory hierarchy
 
 ## 操作系统及其启动过程
 
@@ -113,11 +114,23 @@ Once the BIOS **transfers control to the start of the MBR that was loaded into m
 
 ![transfer-control](./images/transfer-control.png)
 
-### Instruction Cycle with Interrupts
+## Instruction Cycle with Interrupts
 这时候，指令周期图就会变成这样。
 
 ![instruction-cycle-with-interrupts](./images/instruction-cycle-with-interrupts.png)
 
 
 ### Interrupt Processing
+1. The device issues an interrupt signal to the processor.
+2. 处理器完成当前的指令的执行，然后再开始着手回复这个中断信号。
+3. The processor tests for a pending interrupt request, determines that there is one, and sends an acknowledgement signal to the device that issued the interrupt. The acknowledgement allows the device to remove its interrupt signal.
+4. 处理器开始准备执行中断服务程序，保存断点。It saves information need to resume the current program at the point of interrupt. 至少将PSW, PC等寄存器的值入栈。
+5. 处理器把中断服务程序的入口地址放入PC寄存器。这里还会包括将来会讲到的如果通过中断向量号决定调用那个中断服务程序。
+6. 处理器开始运行中断服务程序。
+7. 恢复断点。把栈里面的各个寄存器的值弹出。继续执行原来的程序。
 
+![interrupt-processing](./images/interrupt-processing.png)
+
+
+## 内存分级机制 Memory hierarchy
+![memory-hierarchy](./images/memory-hierarchy.png)
